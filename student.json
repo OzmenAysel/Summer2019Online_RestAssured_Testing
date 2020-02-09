@@ -1,0 +1,30 @@
+
+ {
+  "firstName": "Aysel",
+  "lastName": "Dalcicek",
+  "batch": 12,
+  "joinDate": "05/07/2022",
+  "birthDate": "10/15/1982",
+  "password": "12345",
+  "subject": "Coding",
+  "gender": "female",
+  "admissionNo": "1234",
+  "major": "Online",
+  "section": "606060",
+  "contact": {
+    "phone": "203-040-5404",
+    "emailAddress": "ayseltanzanya@gmail.com",
+    "premanentAddress": "39th Way"
+  },
+  "company": {
+    "companyName": "CybertekSchool",
+    "title": "SDET",
+    "startDate": "02.03.2020",
+    "address": {
+      "street": "39th Way",
+      "city": "Seattle",
+      "state": "Washington",
+      "zipCode": 99999
+    }
+  }
+}
