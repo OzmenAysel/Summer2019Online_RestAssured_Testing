@@ -1,32 +1,34 @@
 package com.automation.tests.Homework;
 
+import com.automation.utilities.APIUtilities;
 import com.automation.utilities.ConfigurationReader;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class Homework1 {
+public class Homework1_UINames {
 
     @BeforeAll
     public static void setup(){
         baseURI = ConfigurationReader.getProperty("uinames_uri");
     }
 
-    /*
-No params test
-1. Send a get request without providing any parameters
-2. Verify status code 200, content type application/json; charset=utf-8
-3. Verify that name, surname, gender, region ﬁelds have value
-     */
-    @Test
+        /*
+    No params test
+    1. Send a get request without providing any parameters
+    2. Verify status code 200, content type application/json; charset=utf-8
+    3. Verify that name, surname, gender, region ﬁelds have value
+         */
+        @Test
     public void NoParamsTest(){
-        given().
-                accept("application/json; charset=utf-8").
-                get("/api/").
-        then().
-                assertThat().statusCode(200).
+        given()
+               .get()
+        .then().assertThat().statusCode(200).
                         and().contentType("application/json; charset=utf-8").
                         and().body("name", is(notNullValue())).
                         and().body("surname", is(notNullValue())).
@@ -44,11 +46,9 @@ No params test
     @Test
     public void genderTest(){
         given().
-                accept("application/json; charset=utf-8").
                 queryParam("gender", "male").      // queryParam("gender", "female").
-                get("/api/").
-        then().
-                assertThat().
+                get().
+        then().assertThat().
                         statusCode(200).
                         contentType("application/json; charset=utf-8").
                         body("gender", is("male")).
@@ -68,9 +68,8 @@ No params test
         given().
                 queryParam("region", "Turkey" ).
                 queryParam("gender", "female").
-                get("/api/").
-         then().
-                assertThat().
+                get().
+         then().assertThat().
                         statusCode(200).
                         contentType("application/json; charset=utf-8").
                         body("region", is("Turkey")).
@@ -89,13 +88,13 @@ No params test
     public void invalidGenderTest(){
         given().
                 queryParam("gender", "invalid"). //????
-                get("/api/").
+                get().
         then().
                assertThat().
                        statusCode(400).
                        contentType("application/json; charset=utf-8").
                        statusLine(containsString("Bad Request")).
-                       body("error", is("Invalid gender")).
+                       body("error", containsString("Invalid gender")).
                        log().all(true);
     }
 
@@ -110,7 +109,7 @@ No params test
     public void  invalidRegionTest (){
         given().
                 queryParam("region", "invalid").
-                get("/api/").
+                get().
          then().
                 assertThat().statusCode(400).
                         contentType("application/json; charset=utf-8").
@@ -128,27 +127,21 @@ No params test
          */
     @Test
     public void  amountAndRegionsTest(){
-        given().
-                queryParam("region","Turkey").
-                queryParam("amount", 5).
-                get("/api/").
-        then().
-                assertThat().
+        Response response =
+                given().queryParam("region","Turkey")
+                .queryParam("amount", 5)
+                .get();
+        response.then().assertThat().
                         statusCode(200).
                         contentType("application/json; charset=utf-8").
-                        // body
                         log().all(true);
 
-        //  body("title", hasItems("Turkey", "5"));
-
-
-//      List<String> list = response.thenReturn().jsonPath().get();
-//        System.out.println(list);
-//        for(int i =0; i<list.size(); i++){
-//       }
-
+      List<Object> list = response.jsonPath().get();
+        assertFalse(APIUtilities.hasDuplicates(list), "List have duplicates");
 
     }
+
+
 
 
         /*
@@ -163,15 +156,14 @@ No params test
                 queryParam("region", "Turkey").
                 queryParam("gender", "female").
                 queryParam("amount", "3").
-                get("/api/").
-        then().
-                assertThat().
-                        statusCode(200).
-                        contentType("application/json; charset=utf-8").
-                        body("region", hasItem("Turkey")).
-                        body("gender", hasItem("female")).
-                        body("", hasSize(3)).   // ???????
-                        log().body(true);
+                get().
+        then().assertThat()
+                        .statusCode(200)
+                        .contentType("application/json; charset=utf-8")
+                        .body("region", everyItem(is("Turkey")))
+                        .body("gender", everyItem(is("female")))
+                        .body("", hasSize(3))
+                        .log().body(true);
     }
 
 
@@ -185,12 +177,12 @@ No params test
     public void amountCountTest(){
     given().
             queryParam("amount", "2").
-            get("api/").
-     then().
-            assertThat().statusCode(200).
-            contentType("application/json; charset=utf-8").
-            body("",hasSize(2)).
-            log().all(true);
+            get().
+     then().assertThat()
+            .statusCode(200)
+            .contentType("application/json; charset=utf-8")
+            .body("",hasSize(2))
+            .log().all(true);
 
 
     }

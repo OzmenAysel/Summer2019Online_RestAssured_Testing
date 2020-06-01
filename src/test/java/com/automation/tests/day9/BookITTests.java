@@ -93,7 +93,7 @@ public class BookITTests {
     }
 
     @Test
-    @DisplayName("Get all roms and deserialize it into collection of Rooms")
+    @DisplayName("Get all rooms and deserialize it into collection of Rooms")
     public void test4() {
         //in real work environment, common practice is to authenticate with SSL certificate
         //you add SSL certificate on your side, with every request
@@ -123,7 +123,7 @@ public class BookITTests {
     }
 //    campus-location	required	name of the campus which team will be added to
 //    batch-number	required	number of the batch which team will be added to
-//    team-name	required	name of the team, should be uniq per campus
+//    team-name	required	name of the team, should be unique per campus
 
     /**
      * given valid token is provided for student team leader

@@ -79,6 +79,10 @@ public class POJOTesting {
         #2 get collection of POJO’s.
         Same thing like we did with Job class
          */
+
+        /*
+        Json to Pojo --> Gson g = new Gson(); Player p = g.fromJson(jsonString, Player.class)
+         */
     @Test
     @DisplayName("Convert from JSON to Location POJO")
     public void test4() {
@@ -86,7 +90,11 @@ public class POJOTesting {
                 accept(ContentType.JSON).
                 when().
                 get("/locations/{location_id}", 2500);
+
         Location location = response.jsonPath().getObject("", Location.class);
+          // OR but not tested
+//        Gson gson = new Gson();
+//        Location location = gson.fromJson(response.jsonPath().toString(),Location.class);
 
         System.out.println(location);
 

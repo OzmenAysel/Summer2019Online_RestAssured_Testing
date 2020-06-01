@@ -32,27 +32,35 @@ public class Spartan {
     }
 
     public int getSpartanId() {
+
         return spartanId;
     }
-    public void setSpartanId(int spartanId) {
+    public void setSpartanId(int spartanId)
+    {
         this.spartanId = spartanId;
     }
     public String getName() {
+
         return name;
     }
     public void setName(String name) {
+
         this.name = name;
     }
-    public String getGender() {
+    public String getGender()
+    {
         return gender;
     }
     public void setGender(String gender) {
+
         this.gender = gender;
     }
-    public long getPhone() {
+    public long getPhone()
+    {
         return phone;
     }
-    public void setPhone(long phone) {
+    public void setPhone(long phone)
+    {
         this.phone = phone;
     }
 

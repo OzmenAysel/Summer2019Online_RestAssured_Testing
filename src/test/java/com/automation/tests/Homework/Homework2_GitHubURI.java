@@ -1,30 +1,32 @@
 package com.automation.tests.Homework;
 
-import com.automation.pojos.Spartan;
-import com.github.javafaker.Faker;
-import org.junit.jupiter.api.*;
-
-import com.automation.pojos.Job;
-import com.automation.pojos.Location;
+import com.automation.utilities.APIUtilities;
 import com.automation.utilities.ConfigurationReader;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.BeforeAll;
-import io.restassured.http.Header;
 import io.restassured.response.Response;
-
-import java.io.*;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import java.util.List;
 
-public class Homework2 {
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+
+public class Homework2_GitHubURI {
 
     @BeforeAll
     public static void setup(){
@@ -82,15 +84,16 @@ public class Homework2 {
     @Test
     @DisplayName("Verify number of repositories")
     public void numberOfRepositories(){
-       Response response = given().accept(ContentType.JSON).get("/orgs/Cucumber").prettyPeek();
+       Response response = given().accept(ContentType.JSON).when().get("/orgs/Cucumber").prettyPeek();
              int repNumber =response.jsonPath().getInt("public_repos");
 
-        Response response2 = given().accept(ContentType.JSON).get("/orgs/Cucumber/repos");
+        Response response2 = given().accept(ContentType.JSON).when().get("/orgs/Cucumber/repos").prettyPeek();
 
-        List<Object> number = response2.jsonPath().get();
+        List<Object> rep = response2.jsonPath().get();
 
-        assertEquals(repNumber,number.size());
+        assertEquals(repNumber,rep.size());
     }
+
 
     /*
         1. Send a get request to /orgs/:org/repos. Request includes :
@@ -99,29 +102,15 @@ public class Homework2 {
         3. Verify that node_id ﬁeld is unique in every in every object in the response
      */
     @Test
-    @DisplayName("Verify repository id information")  //?????????
+    @DisplayName("Verify repository id information")
     public void idInformation(){
         Response response=given().accept(ContentType.JSON).
                 get("/orgs/Cucumber/repos").prettyPeek();
 
         List<Integer> id = response.jsonPath().getList("id");
-        for(int i=0; i<id.size(); i++){
-            for(int j=0; i<id.size(); j++){
-                if(id.get(i).equals(id.get(j))){
-
-                }
-            }
-        }
         List<Integer> nodeId = response.jsonPath().getList("node_id");
-        for(int i=0; i<nodeId.size(); i++){
-            for(int j=0; i<nodeId.size(); j++){
-                if(id.get(i).equals(nodeId.get(j))){
-
-                }
-            }
-        }
-
-
+        assertFalse(APIUtilities.hasDuplicates(id), "It is not Unique");
+        assertFalse(APIUtilities.hasDuplicates(nodeId), "It is not Unique");
     }
 
     /*

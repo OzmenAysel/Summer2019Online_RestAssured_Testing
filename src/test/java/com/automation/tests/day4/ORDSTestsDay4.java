@@ -103,6 +103,21 @@ public class ORDSTestsDay4 {
         assertEquals(25, countries.size());
     }
 
+    //to switch to java 9, add/replace it in pom.xml:
+
+    //    <build>
+    //        <plugins>
+    //            <plugin>
+    //                <groupId>org.apache.maven.plugins</groupId>
+    //                <artifactId>maven-compiler-plugin</artifactId>
+    //                <configuration>
+    //                    <source>9</source>
+    //                    <target>9</target>
+    //                </configuration>
+    //            </plugin>
+    //        </plugins>
+    //    </build>
+
     /**
      * given path parameter is "/countries" and region id is 2
      * when user makes get request
@@ -113,22 +128,7 @@ public class ORDSTestsDay4 {
      *  |Canada                   |
      *  |Mexico                   |
      *  |United States of America |
-     *
      */
-//to switch to java 9, add/replace it in pom.xml:
-
-//    <build>
-//        <plugins>
-//            <plugin>
-//                <groupId>org.apache.maven.plugins</groupId>
-//                <artifactId>maven-compiler-plugin</artifactId>
-//                <configuration>
-//                    <source>9</source>
-//                    <target>9</target>
-//                </configuration>
-//            </plugin>
-//        </plugins>
-//    </build>
 
     @Test
     @DisplayName("Verify that payload contains following countries")
@@ -145,7 +145,7 @@ public class ORDSTestsDay4 {
 
         assertEquals(expected, actual);
 
-        ///with assertThat()
+        // with assertThat()
 
         given().
                 accept(ContentType.JSON).
@@ -160,7 +160,6 @@ public class ORDSTestsDay4 {
      * when user makes get request
      * then assert that status code is 200
      * Then user verifies that every employee has positive salary
-     *
      */
     @Test
     @DisplayName("Verify that every employee has positive salary")
@@ -254,7 +253,6 @@ public class ORDSTestsDay4 {
      *  And user verifies following json path contains following entries:
      *      |street_address         |city  |postal_code|country_id|state_province|
      *      |20 Rue des Corps-Saints|Geneva|1730       |CH        |Geneve        |
-     *
      */
 
     /**

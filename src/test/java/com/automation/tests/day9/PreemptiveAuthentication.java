@@ -40,4 +40,5 @@ public class PreemptiveAuthentication {
                 get("/basic_auth").prettyPeek().
                 then().assertThat().statusCode(200);
     }
+
 }

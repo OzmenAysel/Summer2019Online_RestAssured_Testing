@@ -74,12 +74,11 @@ public class SpartanTests {
          then().assertThat().
                 statusCode(200).
                 contentType(ContentType.XML);
-
     }
 
     /**
      * We can convert payload (JSON body for example) into collection.
-     * if it's a single variable: "name" : "James", we acn store in String or List<String>
+     * if it's a single variable: "name" : "James", we can store in String or List<String>
      * If, there multiple names in the payload, we cannot use single String as a storage
      * instead, use List<String>
      * If payload returns object:
@@ -194,7 +193,7 @@ public class SpartanTests {
 
         Spartan spartan = new Spartan();
         spartan.setGender("Female");//Male or Female
-        spartan.setName("Aysel Dalcicek");
+        spartan.setName("Aysel Deniz");
         spartan.setPhone(5712134235L); //at least 10 digits
 
         Response response = given().
@@ -301,7 +300,7 @@ public class SpartanTests {
     public void test9() {
         Spartan spartan = new Spartan().
                 withGender("Male").
-                withName("Kadri Dalcicek").
+                withName("Kadri Deniz").
                 withPhone(9999999999L);
 
         Response response = given().
@@ -336,9 +335,20 @@ public class SpartanTests {
         response.prettyPrint();
         //POST - add new spartan
         //PUT - update existing one, but you have to specify all properties
-        //PATCH - update existing one, but ypu may specify one or more properties to update
+        //PATCH - update existing one, but you may specify one or more properties to update
+    }
 
-
+    @Test
+    @DisplayName("Post")
+    public void test11(){
+        Map<String,Object> post = new HashMap<>();
+        post.put("name","User SDET");
+        post.put("gender","Female");
+        post.put("phone",2058967452L);
+        Response response = given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(post).post("/spartans").prettyPeek();
     }
 
 

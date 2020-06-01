@@ -37,9 +37,6 @@ public class WarmUP {
      * Then user verifies that total number of holidays in United Kingdom is equals to 95
      *
      * website: https://calendarific.com/
-     *
-     *
-     *
      */
 
     @BeforeAll

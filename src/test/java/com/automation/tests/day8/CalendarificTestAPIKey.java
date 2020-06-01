@@ -99,7 +99,6 @@ public class CalendarificTestAPIKey {
 
 
     /**
-     *
      * Given accept content type as JSON
      * And query parameter api_key with valid API key
      * And query parameter country is equals to US
