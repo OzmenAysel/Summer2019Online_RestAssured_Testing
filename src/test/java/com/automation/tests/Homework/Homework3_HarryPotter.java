@@ -274,6 +274,7 @@ public class Homework3_HarryPotter {
         • Path param id with value from step 3
         6.Verify that response contains the  same member ids as the step 4
      */
+
     @Test
     @DisplayName("Verify house members")
     public void test8(){
